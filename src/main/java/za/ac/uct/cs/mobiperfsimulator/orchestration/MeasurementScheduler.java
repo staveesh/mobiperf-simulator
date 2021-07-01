@@ -54,8 +54,10 @@ public class MeasurementScheduler {
             try {
                 logger.info("Restoring schedule from disk...");
                 File scheduleFile = new File(scheduleFilePath);
-                if(!scheduleFile.exists())
-                    scheduleFile.createNewFile();
+                if (scheduleFile.exists()) {
+                    scheduleFile.delete();
+                }
+                scheduleFile.createNewFile();
                 FileInputStream inputstream = new FileInputStream(scheduleFile);
                 InputStreamReader streamreader = new InputStreamReader(inputstream);
                 BufferedReader bufferedreader = new BufferedReader(streamreader);
