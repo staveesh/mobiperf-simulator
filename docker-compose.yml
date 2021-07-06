@@ -14,3 +14,5 @@ services:
       - /etc/localtime:/etc/localtime:ro
     networks:
       - backend
+    env_file:
+      - .env
