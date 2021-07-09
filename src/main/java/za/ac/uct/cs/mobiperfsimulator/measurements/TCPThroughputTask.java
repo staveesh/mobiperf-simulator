@@ -64,7 +64,7 @@ public class TCPThroughputTask extends MeasurementTask {
   private final int KBYTE = 1024;
   private static final int DATA_LIMIT_MB_UP = 5; 
   private static final int DATA_LIMIT_MB_DOWN = 10;
-  private boolean DATA_LIMIT_ON = true;
+  private boolean DATA_LIMIT_ON = false;
   private boolean DATA_LIMIT_EXCEEDED = false;
   private static final String UPLINK_FINISH_MSG = "*";
 
