@@ -255,8 +255,6 @@ public class MeasurementScheduler {
                     submitTask(newTask);
                 }
             }
-            // Schedule the next measurement in the taskQueue
-            task = taskQueue.peek();
         } catch (IllegalArgumentException e) {
             // Task creation in clone can create this exception
             logger.error("Exception when cloning task");

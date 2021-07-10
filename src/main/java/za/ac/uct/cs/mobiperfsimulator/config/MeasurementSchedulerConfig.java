@@ -32,20 +32,20 @@ public class MeasurementSchedulerConfig implements SchedulingConfigurer {
         taskRegistrar.setScheduler(jobSchedulerThread());
         taskRegistrar.addTriggerTask(() -> {
             PriorityBlockingQueue<MeasurementTask> queue = mScheduler.getTaskQueue();
-            if(queue.size() > 0) {
+            if (queue.size() > 0) {
                 logger.info("Handling next measurement...");
                 mScheduler.handleMeasurement();
             }
         }, triggerContext -> {
-            if (nextRunTimeStamp == null)
-                nextRunTimeStamp = new Date(System.currentTimeMillis() +
+            nextRunTimeStamp = new Date(System.currentTimeMillis() +
                         TimeUnit.SECONDS.toMillis(Constants.JOB_SCHEDULER_PERIOD_SECONDS));
             PriorityBlockingQueue<MeasurementTask> queue = mScheduler.getTaskQueue();
-            if(queue.size() > 0){
+            if (queue.size() > 0) {
                 MeasurementTask nextTask = queue.peek();
                 nextRunTimeStamp = new Date(System.currentTimeMillis() +
-                        Math.max(nextTask.timeFromExecution(), 1000*Constants.JOB_SCHEDULER_PERIOD_SECONDS));
+                        Math.max(nextTask.timeFromExecution(), 1000 * Constants.JOB_SCHEDULER_PERIOD_SECONDS));
             }
+            logger.info("Next run : " + nextRunTimeStamp);
             return nextRunTimeStamp;
         });
     }
