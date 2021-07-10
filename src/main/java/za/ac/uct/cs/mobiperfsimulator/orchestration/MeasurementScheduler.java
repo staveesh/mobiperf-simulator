@@ -311,6 +311,10 @@ public class MeasurementScheduler {
         }
     }
 
+    public PriorityBlockingQueue<MeasurementTask> getTaskQueue(){
+        return taskQueue;
+    }
+
     /**
      * Sets the current task being run. In the current implementation, the synchronized keyword is not
      * needed because only one thread runs measurements and calls this method. It is not thread safe.

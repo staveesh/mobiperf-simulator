@@ -51,6 +51,7 @@ public interface Constants {
     /** Tasks expire in seven days. Expired tasks will be removed from the scheduler.
      * In general, schedule updates from the server should take care of this automatically. */
     long TASK_EXPIRATION_MSEC = 7 * 24 * 3600 * 1000;
+    long JOB_SCHEDULER_PERIOD_SECONDS = 3L;
 
 
     /** Constants used in MeasurementMonitorActivity.java */
