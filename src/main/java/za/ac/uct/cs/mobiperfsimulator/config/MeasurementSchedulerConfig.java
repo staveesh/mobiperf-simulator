@@ -43,7 +43,7 @@ public class MeasurementSchedulerConfig implements SchedulingConfigurer {
             if (queue.size() > 0) {
                 MeasurementTask nextTask = queue.peek();
                 nextRunTimeStamp = new Date(System.currentTimeMillis() +
-                        Math.max(nextTask.timeFromExecution(), 1000 * Constants.JOB_SCHEDULER_PERIOD_SECONDS));
+                        Math.max(nextTask.timeFromExecution(), Constants.MIN_TIME_BETWEEN_MEASUREMENT_ALARM_MSEC));
             }
             logger.info("Next run : " + nextRunTimeStamp);
             return nextRunTimeStamp;
