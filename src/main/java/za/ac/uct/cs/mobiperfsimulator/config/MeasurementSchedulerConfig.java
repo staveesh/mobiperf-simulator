@@ -45,7 +45,6 @@ public class MeasurementSchedulerConfig implements SchedulingConfigurer {
                 nextRunTimeStamp = new Date(System.currentTimeMillis() +
                         Math.max(nextTask.timeFromExecution(), Constants.MIN_TIME_BETWEEN_MEASUREMENT_ALARM_MSEC));
             }
-            logger.info("Next run : " + nextRunTimeStamp);
             return nextRunTimeStamp;
         });
     }
