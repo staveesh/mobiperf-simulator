@@ -197,17 +197,6 @@ public class Util {
     return pingExecutable;
   }
 
-  public static String resolveServer(){
-    try {
-      InetAddress inetAddress = InetAddress.getByName(BeanUtil.getBean(WebSocketService.class).getSpeedTestServer());
-      return inetAddress.getHostAddress();
-    }
-    catch (UnknownHostException e){
-      e.printStackTrace();
-    }
-    return null;
-  }
-
   public static String hashTimeStamp() {
     MessageDigest md = null;
     try {
