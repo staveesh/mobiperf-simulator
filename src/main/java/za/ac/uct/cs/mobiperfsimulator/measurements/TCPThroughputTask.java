@@ -295,9 +295,8 @@ public class TCPThroughputTask extends MeasurementTask {
   public MeasurementResult call() throws MeasurementError {
     boolean isMeasurementSuccessful = false;
     TCPThroughputDesc desc = (TCPThroughputDesc)measurementDesc;
-    desc.target = BeanUtil.getBean(WebSocketService.class).getSpeedTestServer();
     logger.info("Setting target to: " + desc.target);
-
+    long expEndTime = 0;
     logger.info("Running TCPThroughput on " + desc.target);
     try {
       // fetch server information
@@ -305,15 +304,16 @@ public class TCPThroughputTask extends MeasurementTask {
         throw new MeasurementError("Fail to acquire server configuration");
       }
       logger.info("Server version is " + this.serverVersion);
+      this.taskStartTime = System.currentTimeMillis();
       if (desc.dir_up == true) {
         uplink();
         logger.info("Uplink measurement result is:");
       }
       else {
-        this.taskStartTime = System.currentTimeMillis();
         downlink();
         logger.info("Downlink measurement result is:");
       }
+      expEndTime = System.currentTimeMillis();
       isMeasurementSuccessful = true;
     } catch (MeasurementError e) {
       isMeasurementSuccessful = false;
@@ -332,9 +332,11 @@ public class TCPThroughputTask extends MeasurementTask {
                                this.measurementDesc, (long) (this.taskDuration*1000));
     // TODO (Haokun): add more results if necessary
     if(isMeasurementSuccessful) {
+      result.addResult("expStart", this.taskStartTime);
+      result.addResult("expEnd", expEndTime);
       result.addResult("tcp_speed_results", this.samplingResults);
       result.addResult("data_limit_exceeded", this.DATA_LIMIT_EXCEEDED);
-      result.addResult("duration", this.taskDuration);
+      result.addResult("duration", expEndTime-this.taskStartTime);
       result.addResult("server_version", this.serverVersion);
       result.addResult("total_data_sent_received", this.totalSendSize + this.totalRevSize);
     }

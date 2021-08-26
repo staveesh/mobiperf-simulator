@@ -151,6 +151,7 @@ public class HttpTask extends MeasurementTask {
         int statusCode = HttpTask.DEFAULT_STATUS_CODE;
         long duration = 0;
         long startTime = System.currentTimeMillis();
+        long endTime = 0;
         long originalHeadersLen = 0;
         String headers = null;
         ByteBuffer body = ByteBuffer.allocate(HttpTask.MAX_BODY_SIZE_TO_UPLOAD);
@@ -220,7 +221,8 @@ public class HttpTask extends MeasurementTask {
             success = (statusCode == 200);
 
             responseStream = urlConnection.getInputStream();
-            duration = System.currentTimeMillis() - startTime;
+            endTime = System.currentTimeMillis();
+            duration = endTime - startTime;
             while ((readLen = responseStream.read(readBuffer)) > 0
                     && totalBodyLen <= HttpTask.MAX_HTTP_RESPONSE_SIZE) {
                 totalBodyLen += readLen;
@@ -251,7 +253,8 @@ public class HttpTask extends MeasurementTask {
                     success, this.measurementDesc, duration);
 
             result.addResult("code", statusCode);
-
+            result.addResult("expStart", startTime);
+            result.addResult("expEnd", endTime);
             dataConsumed = 0;
 
             if (success) {

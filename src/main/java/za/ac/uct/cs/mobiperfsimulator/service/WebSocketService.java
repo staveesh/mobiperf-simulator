@@ -25,8 +25,6 @@ public class WebSocketService {
 
     private String deviceId;
 
-    private String speedTestServer;
-
     private StompSession stompSession;
     private WebSocketConfig webSocketConfig;
     @Autowired
@@ -36,12 +34,10 @@ public class WebSocketService {
     @Autowired
     public WebSocketService(WebSocketConfig webSocketConfig,
                             @Value("${measurement.server.endpoint}") String webSocketUri,
-                            @Value("${mobiperf.device.id}") String deviceId,
-                            @Value("${speed.test.server}") String speedTestServer) {
+                            @Value("${mobiperf.device.id}") String deviceId) {
         this.webSocketConfig = webSocketConfig;
         this.webSocketUri = webSocketUri;
         this.deviceId = deviceId;
-        this.speedTestServer = speedTestServer;
         initSession();
     }
 
@@ -84,9 +80,5 @@ public class WebSocketService {
 
     public String getDeviceId() {
         return deviceId;
-    }
-
-    public String getSpeedTestServer() {
-        return speedTestServer;
     }
 }

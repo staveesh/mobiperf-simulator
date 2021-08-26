@@ -196,6 +196,7 @@ public class TracerouteTask extends MeasurementTask {
     MeasurementResult result = null;
     long duration = 0;
     long startTime = System.currentTimeMillis();
+    long endTime = 0;
     while (maxHopCount-- >= 0 && !stopRequested) {
       /* Current traceroute implementation sends out three ICMP probes per TTL.
        * One ping every 0.2s is the lower bound before some platforms requires
@@ -267,6 +268,7 @@ public class TracerouteTask extends MeasurementTask {
         // Process the extracted IPs of intermediate hops
         StringBuffer progressStr = new StringBuffer(ttl + ": ");
         for (String ip : hostsAtThisDistance) {
+          endTime = System.currentTimeMillis();
           // If we have reached the final destination hostIp, print it out and clean up
           if (ip.compareTo(hostIp) == 0) {
             logger.info(ttl + ": " + hostIp);
@@ -285,6 +287,8 @@ public class TracerouteTask extends MeasurementTask {
               }
               result.addResult("hop_" + i + "_rtt_ms", String.format("%.3f", hopInfo.rtt));
             }
+            result.addResult("expStart", startTime);
+            result.addResult("expEnd", endTime);
             String jsonResultString= MeasurementJsonConvertor.toJsonString(result);
             logger.info(jsonResultString);
             wsSession.send(Constants.STOMP_SERVER_JOB_RESULT_ENDPOINT, jsonResultString);

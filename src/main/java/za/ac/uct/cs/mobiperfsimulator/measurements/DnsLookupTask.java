@@ -128,6 +128,8 @@ public class DnsLookupTask extends MeasurementTask {
         }
         MeasurementResult result = new MeasurementResult(BeanUtil.getBean(WebSocketService.class).getDeviceId(), DnsLookupTask.TYPE,  System.currentTimeMillis() * 1000,
                 resultInet != null, this.measurementDesc, t2 - t1);
+        result.addResult("expStart", t1);
+        result.addResult("expEnd", t2);
         if (resultInet != null) {
             result.addResult("address", resultInet.getHostAddress());
             result.addResult("realHostname", resultInet.getCanonicalHostName());
