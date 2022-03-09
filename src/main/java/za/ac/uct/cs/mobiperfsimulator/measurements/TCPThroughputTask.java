@@ -88,7 +88,7 @@ public class TCPThroughputTask extends MeasurementTask {
   // class constructor
   public TCPThroughputTask(MeasurementDesc desc) {
     super(new TCPThroughputDesc(desc.key, desc.startTime, desc.endTime, 
-          desc.intervalSec, desc.count, desc.priority, desc.parameters, desc.instanceNumber));
+          desc.intervalSec, desc.count, desc.priority, desc.parameters, desc.instanceNumber, desc.addedToQueueAt, desc.dispatchTime));
     logger.info("Create new throughput task");
   }
 
@@ -117,10 +117,10 @@ public class TCPThroughputTask extends MeasurementTask {
 
     public TCPThroughputDesc(String key, Date startTime,
                              Date endTime, double intervalSec, long count, 
-                             long priority, Map<String, String> params, int instanceNumber)
+                             long priority, Map<String, String> params, int instanceNumber, Date addedToQueueAt, Date dispatchTime)
                              throws InvalidParameterException {
       super(TCPThroughputTask.TYPE, key, startTime, endTime, intervalSec, count,
-            priority, params, instanceNumber);
+            priority, params, instanceNumber, addedToQueueAt, dispatchTime);
       initializeParams(params);
       if (this.target == null || this.target.length() == 0) {
         throw new InvalidParameterException("TCPThroughputTask null target");
@@ -248,7 +248,7 @@ public class TCPThroughputTask extends MeasurementTask {
     TCPThroughputDesc newDesc = new TCPThroughputDesc(
                                 desc.key, desc.startTime, 
                                 desc.endTime, desc.intervalSec, desc.count, desc.priority,
-                                desc.parameters, desc.instanceNumber);
+                                desc.parameters, desc.instanceNumber, desc.addedToQueueAt, desc.dispatchTime);
     return new TCPThroughputTask(newDesc);
   }
 

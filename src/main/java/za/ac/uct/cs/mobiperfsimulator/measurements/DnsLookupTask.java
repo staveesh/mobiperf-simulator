@@ -56,9 +56,9 @@ public class DnsLookupTask extends MeasurementTask {
         private String server;
 
         public DnsLookupDesc(String key, Date startTime, Date endTime,
-                             double intervalSec, long count, long priority, Map<String, String> params, int instanceNumber) {
+                             double intervalSec, long count, long priority, Map<String, String> params, int instanceNumber, Date addedToQueueAt, Date dispatchTime) {
             super(DnsLookupTask.TYPE, key, startTime, endTime, intervalSec, count,
-                    priority, params, instanceNumber);
+                    priority, params, instanceNumber, addedToQueueAt, dispatchTime);
             initializeParams(params);
             if (this.target == null || this.target.length() == 0) {
                 throw new InvalidParameterException("LookupDnsTask cannot be created due " +
@@ -88,7 +88,7 @@ public class DnsLookupTask extends MeasurementTask {
 
     public DnsLookupTask(MeasurementDesc desc) {
         super(new DnsLookupDesc(desc.key, desc.startTime, desc.endTime, desc.intervalSec,
-                desc.count, desc.priority, desc.parameters, desc.instanceNumber));
+                desc.count, desc.priority, desc.parameters, desc.instanceNumber, desc.addedToQueueAt, desc.dispatchTime));
     }
 
     /**
@@ -98,7 +98,7 @@ public class DnsLookupTask extends MeasurementTask {
     public MeasurementTask clone() {
         MeasurementDesc desc = this.measurementDesc;
         DnsLookupDesc newDesc = new DnsLookupDesc(desc.key, desc.startTime, desc.endTime,
-                desc.intervalSec, desc.count, desc.priority, desc.parameters, desc.instanceNumber);
+                desc.intervalSec, desc.count, desc.priority, desc.parameters, desc.instanceNumber, desc.addedToQueueAt, desc.dispatchTime);
         return new DnsLookupTask(newDesc);
     }
 

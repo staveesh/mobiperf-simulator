@@ -83,9 +83,9 @@ public class TracerouteTask extends MeasurementTask {
     
     public TracerouteDesc(String key, Date startTime,
                           Date endTime, double intervalSec, long count, long priority, 
-                          Map<String, String> params, int instanceNumber) throws InvalidParameterException {
+                          Map<String, String> params, int instanceNumber, Date addedToQueueAt, Date dispatchTime) throws InvalidParameterException {
       super(TracerouteTask.TYPE, key, startTime, endTime, intervalSec, count, 
-          priority, params, instanceNumber);
+          priority, params, instanceNumber, addedToQueueAt, dispatchTime);
       initializeParams(params);
       
       if (target == null || target.length() == 0) {
@@ -148,7 +148,7 @@ public class TracerouteTask extends MeasurementTask {
   
   public TracerouteTask(MeasurementDesc desc) {
     super(new TracerouteDesc(desc.key, desc.startTime, desc.endTime, desc.intervalSec,
-      desc.count, desc.priority, desc.parameters, desc.instanceNumber));
+      desc.count, desc.priority, desc.parameters, desc.instanceNumber, desc.addedToQueueAt, desc.dispatchTime));
     dataConsumed = 0;
   }
   
@@ -159,7 +159,7 @@ public class TracerouteTask extends MeasurementTask {
   public MeasurementTask clone() {
     MeasurementDesc desc = this.measurementDesc;
     TracerouteDesc newDesc = new TracerouteDesc(desc.key, desc.startTime, desc.endTime, 
-      desc.intervalSec, desc.count, desc.priority, desc.parameters, desc.instanceNumber);
+      desc.intervalSec, desc.count, desc.priority, desc.parameters, desc.instanceNumber, desc.addedToQueueAt, desc.dispatchTime);
     return new TracerouteTask(newDesc);
   }
 

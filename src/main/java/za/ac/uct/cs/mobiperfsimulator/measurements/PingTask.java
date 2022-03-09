@@ -74,9 +74,9 @@ public class PingTask extends MeasurementTask {
 
         public PingDesc(String key, Date startTime,
                         Date endTime, double intervalSec, long count, long priority,
-                        Map<String, String> params, int instanceNumber) throws InvalidParameterException {
+                        Map<String, String> params, int instanceNumber, Date addedToQueueAt, Date dispatchTime) throws InvalidParameterException {
             super(PingTask.TYPE, key, startTime, endTime, intervalSec, count,
-                    priority, params, instanceNumber);
+                    priority, params, instanceNumber, addedToQueueAt, dispatchTime);
             initializeParams(params);
             if (this.target == null || this.target.length() == 0) {
                 throw new InvalidParameterException("PingTask cannot be created due "
@@ -119,7 +119,7 @@ public class PingTask extends MeasurementTask {
 
     public PingTask(MeasurementDesc desc) {
         super(new PingDesc(desc.key, desc.startTime, desc.endTime, desc.intervalSec,
-                desc.count, desc.priority, desc.parameters, desc.instanceNumber));
+                desc.count, desc.priority, desc.parameters, desc.instanceNumber, desc.addedToQueueAt, desc.dispatchTime));
         dataConsumed = 0;
     }
 
@@ -130,7 +130,7 @@ public class PingTask extends MeasurementTask {
     public MeasurementTask clone() {
         MeasurementDesc desc = this.measurementDesc;
         PingDesc newDesc = new PingDesc(desc.key, desc.startTime, desc.endTime,
-                desc.intervalSec, desc.count, desc.priority, desc.parameters, desc.instanceNumber);
+                desc.intervalSec, desc.count, desc.priority, desc.parameters, desc.instanceNumber, desc.addedToQueueAt, desc.dispatchTime);
         return new PingTask(newDesc);
     }
 

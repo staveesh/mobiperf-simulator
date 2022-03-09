@@ -38,6 +38,8 @@ public abstract class MeasurementDesc {
   public long priority;
   public Map<String, String> parameters;
   public int instanceNumber;
+  public Date addedToQueueAt;
+  public Date dispatchTime;
     
   /**
    * @param type Type of measurement (ping, dns, traceroute, etc.) 
@@ -58,7 +60,7 @@ public abstract class MeasurementDesc {
    */
   protected MeasurementDesc(String type, String key, Date startTime, 
                             Date endTime, double intervalSec, long count, long priority, 
-                            Map<String, String> params, int instanceNumber) {
+                            Map<String, String> params, int instanceNumber, Date addedToQueueAt, Date dispatchTime) {
     super();
     this.type = type;
     this.key = key;
@@ -83,6 +85,8 @@ public abstract class MeasurementDesc {
     this.priority = priority;
     this.parameters = params;
     this.instanceNumber = instanceNumber;
+    this.addedToQueueAt = addedToQueueAt;
+    this.dispatchTime = dispatchTime;
   }
   
   /**
